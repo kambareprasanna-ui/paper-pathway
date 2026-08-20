@@ -1,0 +1,13 @@
+{
+  "name": "Paper Path — Question Paper Workflow",
+  "short_name": "Paper Path",
+  "description": "Design, review and release university question papers.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF7F1",
+  "theme_color": "#7B1416",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
