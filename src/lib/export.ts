@@ -15,7 +15,7 @@ export interface ExportablePaper {
   sets: PaperSet[];
 }
 
-interface ExportOptions {
+export interface ExportOptions {
   /** Exam-facing copies pass false so Course Outcomes never reach students. */
   includeCourseOutcomes: boolean;
 }
@@ -121,8 +121,11 @@ export function buildPaperHtml(paper: ExportablePaper, options: ExportOptions): 
 }
 
 /** Opens the exam copy in a new window and sends it straight to the printer. */
-export function printPaper(paper: ExportablePaper) {
-  const html = buildPaperHtml(paper, { includeCourseOutcomes: false });
+export function printPaper(
+  paper: ExportablePaper,
+  options: ExportOptions = { includeCourseOutcomes: false },
+) {
+  const html = buildPaperHtml(paper, options);
   const win = window.open("", "_blank", "width=900,height=1100");
   if (!win) return false;
   win.document.write(html);
@@ -132,10 +135,16 @@ export function printPaper(paper: ExportablePaper) {
   return true;
 }
 
-export function downloadWord(paper: ExportablePaper) {
-  const html = buildPaperHtml(paper, { includeCourseOutcomes: false });
+export function downloadWord(
+  paper: ExportablePaper,
+  options: ExportOptions = { includeCourseOutcomes: false },
+) {
+  const html = buildPaperHtml(paper, options);
   const blob = new Blob(["\ufeff", html], { type: "application/msword" });
-  triggerDownload(blob, `${paper.course_code || "paper"}-exam-copy.doc`);
+  triggerDownload(
+    blob,
+    `${paper.course_code || "paper"}-${options.includeCourseOutcomes ? "internal" : "exam"}-copy.doc`,
+  );
 }
 
 async function logoPng(): Promise<string | null> {
@@ -160,7 +169,10 @@ async function logoPng(): Promise<string | null> {
   }
 }
 
-export async function downloadPdf(paper: ExportablePaper) {
+export async function downloadPdf(
+  paper: ExportablePaper,
+  options: ExportOptions = { includeCourseOutcomes: false },
+) {
   const doc = new jsPDF({ unit: "pt", format: "a4" });
   const margin = 46;
   const width = doc.internal.pageSize.getWidth();
@@ -198,6 +210,19 @@ export async function downloadPdf(paper: ExportablePaper) {
   );
   y += 20;
 
+  if (options.includeCourseOutcomes && paper.course_outcomes.length) {
+    doc.setFont("times", "bold").setFontSize(11);
+    doc.text("Course Outcomes", margin, y);
+    y += 14;
+    doc.setFont("times", "normal").setFontSize(10);
+    paper.course_outcomes.forEach((co) => {
+      const wrapped = doc.splitTextToSize(co, width - margin * 2) as string[];
+      doc.text(wrapped, margin, y);
+      y += wrapped.length * 12;
+    });
+    y += 8;
+  }
+
   const lineHeight = 13;
   const nextPage = () => {
     doc.addPage();
@@ -214,12 +239,18 @@ export async function downloadPdf(paper: ExportablePaper) {
       const text = doc.splitTextToSize(`${q.no}. ${q.text}`, width - margin * 2 - 60) as string[];
       if (y + text.length * lineHeight > doc.internal.pageSize.getHeight() - margin) nextPage();
       doc.text(text, margin, y);
-      doc.text(`[${q.marks}]`, width - margin - 30, y);
+      doc.text(
+        options.includeCourseOutcomes ? `${q.co} / BT ${q.bt}   [${q.marks}]` : `[${q.marks}]`,
+        width - margin - (options.includeCourseOutcomes ? 110 : 30),
+        y,
+      );
       y += text.length * lineHeight + 6;
     });
   });
 
-  doc.save(`${paper.course_code || "paper"}-exam-copy.pdf`);
+  doc.save(
+    `${paper.course_code || "paper"}-${options.includeCourseOutcomes ? "internal" : "exam"}-copy.pdf`,
+  );
 }
 
 function triggerDownload(blob: Blob, filename: string) {
