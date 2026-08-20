@@ -10,14 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthenticatedCoordRouteImport } from './routes/_authenticated/coord'
+import { Route as AuthenticatedDesignerRouteImport } from './routes/_authenticated/designer'
+import { Route as AuthenticatedDqcRouteImport } from './routes/_authenticated/dqc'
+import { Route as AuthenticatedHodRouteImport } from './routes/_authenticated/hod'
+import { Route as AuthenticatedTrackingRouteImport } from './routes/_authenticated/tracking'
 import { Route as AuthForgotRouteImport } from './routes/auth.forgot'
 import { Route as AuthRegisterRouteImport } from './routes/auth.register'
 import { Route as AuthResetRouteImport } from './routes/auth.reset'
+import { Route as AuthenticatedCoordPrintPaperIdRouteImport } from './routes/_authenticated/coord.print.$paperId'
+import { Route as AuthenticatedDesignerPaperPaperIdRouteImport } from './routes/_authenticated/designer.paper.$paperId'
+import { Route as AuthenticatedDqcPaperPaperIdRouteImport } from './routes/_authenticated/dqc.paper.$paperId'
+import { Route as AuthenticatedHodAssignPaperIdRouteImport } from './routes/_authenticated/hod.assign.$paperId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedCoordRoute = AuthenticatedCoordRouteImport.update({
+  id: '/coord',
+  path: '/coord',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDesignerRoute = AuthenticatedDesignerRouteImport.update({
+  id: '/designer',
+  path: '/designer',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDqcRoute = AuthenticatedDqcRouteImport.update({
+  id: '/dqc',
+  path: '/dqc',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedHodRoute = AuthenticatedHodRouteImport.update({
+  id: '/hod',
+  path: '/hod',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTrackingRoute = AuthenticatedTrackingRouteImport.update({
+  id: '/tracking',
+  path: '/tracking',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthForgotRoute = AuthForgotRouteImport.update({
   id: '/auth/forgot',
@@ -34,36 +73,130 @@ const AuthResetRoute = AuthResetRouteImport.update({
   path: '/auth/reset',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedCoordPrintPaperIdRoute =
+  AuthenticatedCoordPrintPaperIdRouteImport.update({
+    id: '/print/$paperId',
+    path: '/print/$paperId',
+    getParentRoute: () => AuthenticatedCoordRoute,
+  } as any)
+const AuthenticatedDesignerPaperPaperIdRoute =
+  AuthenticatedDesignerPaperPaperIdRouteImport.update({
+    id: '/paper/$paperId',
+    path: '/paper/$paperId',
+    getParentRoute: () => AuthenticatedDesignerRoute,
+  } as any)
+const AuthenticatedDqcPaperPaperIdRoute =
+  AuthenticatedDqcPaperPaperIdRouteImport.update({
+    id: '/paper/$paperId',
+    path: '/paper/$paperId',
+    getParentRoute: () => AuthenticatedDqcRoute,
+  } as any)
+const AuthenticatedHodAssignPaperIdRoute =
+  AuthenticatedHodAssignPaperIdRouteImport.update({
+    id: '/assign/$paperId',
+    path: '/assign/$paperId',
+    getParentRoute: () => AuthenticatedHodRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/coord': typeof AuthenticatedCoordRouteWithChildren
+  '/designer': typeof AuthenticatedDesignerRouteWithChildren
+  '/dqc': typeof AuthenticatedDqcRouteWithChildren
+  '/hod': typeof AuthenticatedHodRouteWithChildren
+  '/tracking': typeof AuthenticatedTrackingRoute
   '/auth/forgot': typeof AuthForgotRoute
   '/auth/register': typeof AuthRegisterRoute
   '/auth/reset': typeof AuthResetRoute
+  '/coord/print/$paperId': typeof AuthenticatedCoordPrintPaperIdRoute
+  '/designer/paper/$paperId': typeof AuthenticatedDesignerPaperPaperIdRoute
+  '/dqc/paper/$paperId': typeof AuthenticatedDqcPaperPaperIdRoute
+  '/hod/assign/$paperId': typeof AuthenticatedHodAssignPaperIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/coord': typeof AuthenticatedCoordRouteWithChildren
+  '/designer': typeof AuthenticatedDesignerRouteWithChildren
+  '/dqc': typeof AuthenticatedDqcRouteWithChildren
+  '/hod': typeof AuthenticatedHodRouteWithChildren
+  '/tracking': typeof AuthenticatedTrackingRoute
   '/auth/forgot': typeof AuthForgotRoute
   '/auth/register': typeof AuthRegisterRoute
   '/auth/reset': typeof AuthResetRoute
+  '/coord/print/$paperId': typeof AuthenticatedCoordPrintPaperIdRoute
+  '/designer/paper/$paperId': typeof AuthenticatedDesignerPaperPaperIdRoute
+  '/dqc/paper/$paperId': typeof AuthenticatedDqcPaperPaperIdRoute
+  '/hod/assign/$paperId': typeof AuthenticatedHodAssignPaperIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/_authenticated/coord': typeof AuthenticatedCoordRouteWithChildren
+  '/_authenticated/designer': typeof AuthenticatedDesignerRouteWithChildren
+  '/_authenticated/dqc': typeof AuthenticatedDqcRouteWithChildren
+  '/_authenticated/hod': typeof AuthenticatedHodRouteWithChildren
+  '/_authenticated/tracking': typeof AuthenticatedTrackingRoute
   '/auth/forgot': typeof AuthForgotRoute
   '/auth/register': typeof AuthRegisterRoute
   '/auth/reset': typeof AuthResetRoute
+  '/_authenticated/coord/print/$paperId': typeof AuthenticatedCoordPrintPaperIdRoute
+  '/_authenticated/designer/paper/$paperId': typeof AuthenticatedDesignerPaperPaperIdRoute
+  '/_authenticated/dqc/paper/$paperId': typeof AuthenticatedDqcPaperPaperIdRoute
+  '/_authenticated/hod/assign/$paperId': typeof AuthenticatedHodAssignPaperIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth/forgot' | '/auth/register' | '/auth/reset'
+  fullPaths:
+    | '/'
+    | '/coord'
+    | '/designer'
+    | '/dqc'
+    | '/hod'
+    | '/tracking'
+    | '/auth/forgot'
+    | '/auth/register'
+    | '/auth/reset'
+    | '/coord/print/$paperId'
+    | '/designer/paper/$paperId'
+    | '/dqc/paper/$paperId'
+    | '/hod/assign/$paperId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth/forgot' | '/auth/register' | '/auth/reset'
-  id: '__root__' | '/' | '/auth/forgot' | '/auth/register' | '/auth/reset'
+  to:
+    | '/'
+    | '/coord'
+    | '/designer'
+    | '/dqc'
+    | '/hod'
+    | '/tracking'
+    | '/auth/forgot'
+    | '/auth/register'
+    | '/auth/reset'
+    | '/coord/print/$paperId'
+    | '/designer/paper/$paperId'
+    | '/dqc/paper/$paperId'
+    | '/hod/assign/$paperId'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/_authenticated/coord'
+    | '/_authenticated/designer'
+    | '/_authenticated/dqc'
+    | '/_authenticated/hod'
+    | '/_authenticated/tracking'
+    | '/auth/forgot'
+    | '/auth/register'
+    | '/auth/reset'
+    | '/_authenticated/coord/print/$paperId'
+    | '/_authenticated/designer/paper/$paperId'
+    | '/_authenticated/dqc/paper/$paperId'
+    | '/_authenticated/hod/assign/$paperId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthForgotRoute: typeof AuthForgotRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
   AuthResetRoute: typeof AuthResetRoute
@@ -77,6 +210,48 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/coord': {
+      id: '/_authenticated/coord'
+      path: '/coord'
+      fullPath: '/coord'
+      preLoaderRoute: typeof AuthenticatedCoordRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/designer': {
+      id: '/_authenticated/designer'
+      path: '/designer'
+      fullPath: '/designer'
+      preLoaderRoute: typeof AuthenticatedDesignerRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dqc': {
+      id: '/_authenticated/dqc'
+      path: '/dqc'
+      fullPath: '/dqc'
+      preLoaderRoute: typeof AuthenticatedDqcRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/hod': {
+      id: '/_authenticated/hod'
+      path: '/hod'
+      fullPath: '/hod'
+      preLoaderRoute: typeof AuthenticatedHodRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tracking': {
+      id: '/_authenticated/tracking'
+      path: '/tracking'
+      fullPath: '/tracking'
+      preLoaderRoute: typeof AuthenticatedTrackingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/auth/forgot': {
       id: '/auth/forgot'
@@ -99,11 +274,106 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthResetRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/coord/print/$paperId': {
+      id: '/_authenticated/coord/print/$paperId'
+      path: '/print/$paperId'
+      fullPath: '/coord/print/$paperId'
+      preLoaderRoute: typeof AuthenticatedCoordPrintPaperIdRouteImport
+      parentRoute: typeof AuthenticatedCoordRoute
+    }
+    '/_authenticated/designer/paper/$paperId': {
+      id: '/_authenticated/designer/paper/$paperId'
+      path: '/paper/$paperId'
+      fullPath: '/designer/paper/$paperId'
+      preLoaderRoute: typeof AuthenticatedDesignerPaperPaperIdRouteImport
+      parentRoute: typeof AuthenticatedDesignerRoute
+    }
+    '/_authenticated/dqc/paper/$paperId': {
+      id: '/_authenticated/dqc/paper/$paperId'
+      path: '/paper/$paperId'
+      fullPath: '/dqc/paper/$paperId'
+      preLoaderRoute: typeof AuthenticatedDqcPaperPaperIdRouteImport
+      parentRoute: typeof AuthenticatedDqcRoute
+    }
+    '/_authenticated/hod/assign/$paperId': {
+      id: '/_authenticated/hod/assign/$paperId'
+      path: '/assign/$paperId'
+      fullPath: '/hod/assign/$paperId'
+      preLoaderRoute: typeof AuthenticatedHodAssignPaperIdRouteImport
+      parentRoute: typeof AuthenticatedHodRoute
+    }
   }
 }
 
+interface AuthenticatedCoordRouteChildren {
+  AuthenticatedCoordPrintPaperIdRoute: typeof AuthenticatedCoordPrintPaperIdRoute
+}
+
+const AuthenticatedCoordRouteChildren: AuthenticatedCoordRouteChildren = {
+  AuthenticatedCoordPrintPaperIdRoute: AuthenticatedCoordPrintPaperIdRoute,
+}
+
+const AuthenticatedCoordRouteWithChildren =
+  AuthenticatedCoordRoute._addFileChildren(AuthenticatedCoordRouteChildren)
+
+interface AuthenticatedDesignerRouteChildren {
+  AuthenticatedDesignerPaperPaperIdRoute: typeof AuthenticatedDesignerPaperPaperIdRoute
+}
+
+const AuthenticatedDesignerRouteChildren: AuthenticatedDesignerRouteChildren = {
+  AuthenticatedDesignerPaperPaperIdRoute:
+    AuthenticatedDesignerPaperPaperIdRoute,
+}
+
+const AuthenticatedDesignerRouteWithChildren =
+  AuthenticatedDesignerRoute._addFileChildren(
+    AuthenticatedDesignerRouteChildren,
+  )
+
+interface AuthenticatedDqcRouteChildren {
+  AuthenticatedDqcPaperPaperIdRoute: typeof AuthenticatedDqcPaperPaperIdRoute
+}
+
+const AuthenticatedDqcRouteChildren: AuthenticatedDqcRouteChildren = {
+  AuthenticatedDqcPaperPaperIdRoute: AuthenticatedDqcPaperPaperIdRoute,
+}
+
+const AuthenticatedDqcRouteWithChildren =
+  AuthenticatedDqcRoute._addFileChildren(AuthenticatedDqcRouteChildren)
+
+interface AuthenticatedHodRouteChildren {
+  AuthenticatedHodAssignPaperIdRoute: typeof AuthenticatedHodAssignPaperIdRoute
+}
+
+const AuthenticatedHodRouteChildren: AuthenticatedHodRouteChildren = {
+  AuthenticatedHodAssignPaperIdRoute: AuthenticatedHodAssignPaperIdRoute,
+}
+
+const AuthenticatedHodRouteWithChildren =
+  AuthenticatedHodRoute._addFileChildren(AuthenticatedHodRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedCoordRoute: typeof AuthenticatedCoordRouteWithChildren
+  AuthenticatedDesignerRoute: typeof AuthenticatedDesignerRouteWithChildren
+  AuthenticatedDqcRoute: typeof AuthenticatedDqcRouteWithChildren
+  AuthenticatedHodRoute: typeof AuthenticatedHodRouteWithChildren
+  AuthenticatedTrackingRoute: typeof AuthenticatedTrackingRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedCoordRoute: AuthenticatedCoordRouteWithChildren,
+  AuthenticatedDesignerRoute: AuthenticatedDesignerRouteWithChildren,
+  AuthenticatedDqcRoute: AuthenticatedDqcRouteWithChildren,
+  AuthenticatedHodRoute: AuthenticatedHodRouteWithChildren,
+  AuthenticatedTrackingRoute: AuthenticatedTrackingRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthForgotRoute: AuthForgotRoute,
   AuthRegisterRoute: AuthRegisterRoute,
   AuthResetRoute: AuthResetRoute,

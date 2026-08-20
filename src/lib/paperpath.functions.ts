@@ -131,6 +131,7 @@ export const finalizePaper = createServerFn({ method: "POST" })
       link: `/dqc/paper/${paper.id}`,
     });
 
+    const { sendReviewEmail } = await import("@/lib/email.server");
     const emailed = await sendReviewEmail({
       to: data.assignedTo,
       paperId: paper.id,
@@ -244,17 +245,3 @@ export const sendReminder = createServerFn({ method: "POST" })
     }
     return { sent };
   });
-
-/**
- * Branded "paper ready for review" email with a deep link to /dqc/paper/<id>.
- * Sending needs a verified email domain for the project; until then this
- * resolves false and the in-app notification stays the delivery channel.
- */
-async function sendReviewEmail(_args: {
-  to: string;
-  paperId: string;
-  courseLabel: string;
-  dueAt: string;
-}): Promise<boolean> {
-  return false;
-}
