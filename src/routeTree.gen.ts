@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthForgotRouteImport } from './routes/auth.forgot'
 import { Route as AuthRegisterRouteImport } from './routes/auth.register'
+import { Route as AuthResetRouteImport } from './routes/auth.reset'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,44 @@ const AuthRegisterRoute = AuthRegisterRouteImport.update({
   path: '/auth/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthResetRoute = AuthResetRouteImport.update({
+  id: '/auth/reset',
+  path: '/auth/reset',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth/forgot': typeof AuthForgotRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/auth/reset': typeof AuthResetRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth/forgot': typeof AuthForgotRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/auth/reset': typeof AuthResetRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth/forgot': typeof AuthForgotRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/auth/reset': typeof AuthResetRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth/forgot' | '/auth/register'
+  fullPaths: '/' | '/auth/forgot' | '/auth/register' | '/auth/reset'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth/forgot' | '/auth/register'
-  id: '__root__' | '/' | '/auth/forgot' | '/auth/register'
+  to: '/' | '/auth/forgot' | '/auth/register' | '/auth/reset'
+  id: '__root__' | '/' | '/auth/forgot' | '/auth/register' | '/auth/reset'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthForgotRoute: typeof AuthForgotRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
+  AuthResetRoute: typeof AuthResetRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/reset': {
+      id: '/auth/reset'
+      path: '/auth/reset'
+      fullPath: '/auth/reset'
+      preLoaderRoute: typeof AuthResetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthForgotRoute: AuthForgotRoute,
   AuthRegisterRoute: AuthRegisterRoute,
+  AuthResetRoute: AuthResetRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
