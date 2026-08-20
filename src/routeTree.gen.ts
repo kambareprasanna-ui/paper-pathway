@@ -15,6 +15,7 @@ import { Route as AuthenticatedCoordRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedDesignerRouteImport } from './routes/_authenticated/designer'
 import { Route as AuthenticatedDqcRouteImport } from './routes/_authenticated/dqc'
 import { Route as AuthenticatedHodRouteImport } from './routes/_authenticated/hod'
+import { Route as AuthenticatedTrackingRouteImport } from './routes/_authenticated/tracking'
 import { Route as AuthForgotRouteImport } from './routes/auth.forgot'
 import { Route as AuthRegisterRouteImport } from './routes/auth.register'
 import { Route as AuthResetRouteImport } from './routes/auth.reset'
@@ -50,6 +51,11 @@ const AuthenticatedDqcRoute = AuthenticatedDqcRouteImport.update({
 const AuthenticatedHodRoute = AuthenticatedHodRouteImport.update({
   id: '/hod',
   path: '/hod',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTrackingRoute = AuthenticatedTrackingRouteImport.update({
+  id: '/tracking',
+  path: '/tracking',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthForgotRoute = AuthForgotRouteImport.update({
@@ -98,6 +104,7 @@ export interface FileRoutesByFullPath {
   '/designer': typeof AuthenticatedDesignerRouteWithChildren
   '/dqc': typeof AuthenticatedDqcRouteWithChildren
   '/hod': typeof AuthenticatedHodRouteWithChildren
+  '/tracking': typeof AuthenticatedTrackingRoute
   '/auth/forgot': typeof AuthForgotRoute
   '/auth/register': typeof AuthRegisterRoute
   '/auth/reset': typeof AuthResetRoute
@@ -112,6 +119,7 @@ export interface FileRoutesByTo {
   '/designer': typeof AuthenticatedDesignerRouteWithChildren
   '/dqc': typeof AuthenticatedDqcRouteWithChildren
   '/hod': typeof AuthenticatedHodRouteWithChildren
+  '/tracking': typeof AuthenticatedTrackingRoute
   '/auth/forgot': typeof AuthForgotRoute
   '/auth/register': typeof AuthRegisterRoute
   '/auth/reset': typeof AuthResetRoute
@@ -128,6 +136,7 @@ export interface FileRoutesById {
   '/_authenticated/designer': typeof AuthenticatedDesignerRouteWithChildren
   '/_authenticated/dqc': typeof AuthenticatedDqcRouteWithChildren
   '/_authenticated/hod': typeof AuthenticatedHodRouteWithChildren
+  '/_authenticated/tracking': typeof AuthenticatedTrackingRoute
   '/auth/forgot': typeof AuthForgotRoute
   '/auth/register': typeof AuthRegisterRoute
   '/auth/reset': typeof AuthResetRoute
@@ -144,6 +153,7 @@ export interface FileRouteTypes {
     | '/designer'
     | '/dqc'
     | '/hod'
+    | '/tracking'
     | '/auth/forgot'
     | '/auth/register'
     | '/auth/reset'
@@ -158,6 +168,7 @@ export interface FileRouteTypes {
     | '/designer'
     | '/dqc'
     | '/hod'
+    | '/tracking'
     | '/auth/forgot'
     | '/auth/register'
     | '/auth/reset'
@@ -173,6 +184,7 @@ export interface FileRouteTypes {
     | '/_authenticated/designer'
     | '/_authenticated/dqc'
     | '/_authenticated/hod'
+    | '/_authenticated/tracking'
     | '/auth/forgot'
     | '/auth/register'
     | '/auth/reset'
@@ -232,6 +244,13 @@ declare module '@tanstack/react-router' {
       path: '/hod'
       fullPath: '/hod'
       preLoaderRoute: typeof AuthenticatedHodRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tracking': {
+      id: '/_authenticated/tracking'
+      path: '/tracking'
+      fullPath: '/tracking'
+      preLoaderRoute: typeof AuthenticatedTrackingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/auth/forgot': {
@@ -338,6 +357,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDesignerRoute: typeof AuthenticatedDesignerRouteWithChildren
   AuthenticatedDqcRoute: typeof AuthenticatedDqcRouteWithChildren
   AuthenticatedHodRoute: typeof AuthenticatedHodRouteWithChildren
+  AuthenticatedTrackingRoute: typeof AuthenticatedTrackingRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -345,6 +365,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDesignerRoute: AuthenticatedDesignerRouteWithChildren,
   AuthenticatedDqcRoute: AuthenticatedDqcRouteWithChildren,
   AuthenticatedHodRoute: AuthenticatedHodRouteWithChildren,
+  AuthenticatedTrackingRoute: AuthenticatedTrackingRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
